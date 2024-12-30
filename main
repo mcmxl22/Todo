@@ -1,0 +1,62 @@
+class Task:
+    def __init__(self) -> None:
+        self.task_list = []
+
+    def name_task(self) -> str:
+        while True:
+            task_name = input("Enter task name: ").capitalize()
+            if task_name == "":
+                print("You must enter a task.")
+            elif task_name.isdigit():
+                print("Task name cannot be a number.")
+            else:
+                self.task_list.append(task_name)
+                return task_name
+
+    def complete_task(self) -> None:
+        if not self.task_list:
+            print("No tasks to complete.")
+            return
+        
+        print("Current tasks:", self.task_list)
+        while True:
+            completed_task = input("Enter task to complete: ").capitalize()
+            if completed_task in self.task_list:
+                self.task_list.remove(completed_task)
+                print(f"Task '{completed_task}' completed and removed.")
+                break
+            else:
+                print("Task not found. Please try again.")
+
+def make_menu() -> None:
+    menu_options = ["1 Add Task", "2 Complete Task", "3 View Tasks", "4 Exit"]
+    for item in menu_options:
+        print(item)
+
+def select_action() -> str:
+    while True:
+        action = input("What would you like to do? ")
+        if not action:
+            print("You must enter a choice.")
+        elif not action.isdigit() or int(action) not in range(1, 5):
+            print("Invalid choice. Please enter a number between 1 and 4.")
+        else:
+            return action
+
+def main() -> None:
+    task = Task()
+    while True:
+        make_menu()
+        action = select_action()
+        if action == "1":
+            task.name_task()
+        elif action == "2":
+            task.complete_task()
+        elif action == "3":
+            print("Current tasks:", task.task_list)
+        elif action == "4":
+            print("Exiting program. Goodbye!")
+            break
+
+if __name__ == "__main__":
+    main()
